@@ -38,17 +38,63 @@ app.use(form.urlencoded({
 }));
 app.set("view engine", "handlebars")
 
-app.post("/api/plumbers", function(req, res) {
-    res.render("admin")
+app.get("/api/plumbers", function(req, res) {
+  models.pumblerData.find({}, function(err, results) {
+       if (err) {
+           console.log(err);
+       } else {
+           console.log(results);
+           res.json({
+               data: results
+           })
+
+       }
+   })
 });
 
 app.post("/api/plumbers/slot/:slot/day/:day", function(req, res) {
-    res.render("admin")
+  var slot = req.params.slot;
+   var day = req.params.day;
+   models.apiData.find({
+       slot: slot,
+       day: day
+   }, function(err, results) {
+       if (err) {
+           console.log(err);
+       } else {
+           res.json(results)
+       }
+     })
+
+    // res.render("admin")
 });
 app.get("/api/plumbers/:id/bookings", function(req, res) {
     res.render("admin")
 });
 
+
+app.post('/api/plumbers', function(req, res) {
+    var name = req.body.name;
+    var email = req.body.email;
+    var cellnumber = req.body.cellnumber;
+    console.log(name);
+    models.pumblerData.create({
+        name: name,
+        email: email,
+        cellnumber: cellnumber
+    }, function(err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(results)
+            // console.log(results);
+        }
+
+
+
+    })
+
+})
 app.set('port', (process.env.PORT || 5000));
 
 app.use(function(err, req, res, next) {
