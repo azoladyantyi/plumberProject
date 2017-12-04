@@ -10,11 +10,12 @@ mongoose.connect(mongoURL, {
 
 module.exports = function() {
     const plumberSchema = mongoose.Schema({
-    slot: Array,
-    day: Array,
+    slot: String,
+    day: String,
     name: String,
     email: String,
-    cellnumber: Number
+    cellnumber: Number,
+    book: Number
     })
     plumberSchema.index({
         name: 1

@@ -4,60 +4,45 @@
     <meta charset="utf-8">
     <!-- <link rel="stylesheet" href="style.css"> -->
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
     <title></title>
   </head>
-  <script class="tableTemplate" type="text/x-handlebars-templates" style="background-color:#2F4F4F;">
-        <table border="2px" class="table table-striped table-bordered table-condensed table-hover">
-          <thead>
-              <tr>
-                  <th>Sunday</th>
-                  <th>Monday</th>
-                  <th>Tuesday</th>
-                  <th>Wednesday</th>
-                  <th>Thursday</th>
-                  <th>Friday</th>
-                  <th>Saturday</th>
-              </tr>
-          </thead>
-          {{#each plumberList}}
-          <tr>
-          <tbody>
-          <td>{{username}}</td>
-          <td>{{slots}}</td>
-          <td>{{contact}}</td>
-          <td> <button id='btn' onclick ='window.location.reload()' value="{{_id}}">HIRE</button> </td>
-          </tbody>
-          </tr>
-          {{/each}}
-          </table
-  </script>
   <body>
+    <script id="tableTemplate" type="text/x-handlebars-templates" style="background-color:#2F4F4F;">
+       <table border="2px" class="table table-striped table-bordered table-condensed table-hover">
+           <tbody>
+               <tr>
+                   <thead>
+                     <th>Name</th>
+                     <th>Email</th>
+                     <th>cellnumber</th>
+                     <th>Day</th>
+                     <th>Slot</th>
+                     <th>Book</th>
+
+                   </thead>
+               </tr>
+               {{#each plumberList}}
+               <tr>
+                   <td>{{name}}</td>
+                   <td>{{email}}</td>
+                   <td>{{cellnumber}}</td>
+                   <td>{{day}}</td>
+                   <td>{{slot}}</td>
+
+                   <td>
+                  <button class="btn btn-info btn-lg" onclick="window.location.reload()" value="{{_id}}">book</button>
+                   </td>
+               </tr>
+               {{/each}}
+           </tbody>
+       </table>
+   </script>
     <center><h1 style="background-color:#B0BF1A;">Day shift for each plumbler</h1></center>
-    <div class="container-fluid">
-    <div class="w3-row-padding">
-        <form class="table" action="admin" method="get">
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>Sunday</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                    </tr>
-                </thead>
-
-            </table>
-        </form>
-
-    </div>
     <div id="displayTableDays">
 
     </div>
@@ -89,10 +74,19 @@
                         <br>
                         <div class="">
                             <label for="size">Cell number:</label>
-                            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="new_size" placeholder="type in the cell number">
+                            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="cellnumber" placeholder="type in the cell number">
                         </div>
                         <br>
-
+                        <div class="">
+                            <label for="size">Day:</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="day" placeholder="type in the days">
+                        </div>
+                        <br>
+                        <div class="">
+                            <label for="size">Slot:</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="slot" placeholder="type in the slot you like">
+                        </div>
+                        <br>
                         <div class="">
                             <button type="submit" class="btn btn-info btn-lg" id="submit" onclick="addPlumber()">submit</button>
                         </div>
@@ -100,18 +94,7 @@
                 </div>
 
             </div>
-            <label for="">slots</label><br>
-              <input type="radio" name="" value="">Morning</input>
-              <input type="radio" name="" value="">Midday</input>
-              <input type="radio" name="" value="">Afternoon</input><br>
-              <label for="">select the days</label><br>
-              <input type="checkbox" name="days" value="sunday" {{#if days.sunday}} checked {{/if}}>Sunday
-              <input type="checkbox" name="days" value="monday" {{#if days.monday}} checked {{/if}}>Monday
-              <input type="checkbox" name="days" value="tuesday" {{#if days.tuesday}} checked {{/if}}>Tuesday
-              <input type="checkbox" name="days" value="wednesday" {{#if days.wednesday}} checked {{/if}}>Wednesday
-              <input type="checkbox" name="days" value="thursday" {{#if days.thursday}} checked {{/if}}>Thursday
-              <input type="checkbox" name="days" value="friday" {{#if days.friday}} checked {{/if}}>Friday
-              <input type="checkbox" name="days" value="saturday" {{#if days.saturday}} checked {{/if}}>Saturday <br><br>
+
         </div>
   </body>
   <script src="main.js"></script>

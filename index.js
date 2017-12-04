@@ -31,7 +31,7 @@ app.engine("handlebars", exphbs({
     defaultLayout: "main",
     extname: "handlebars"
 }));
-app.use(express.static("public"));
+app.use(express.static("Public"));
 app.use(express.static("views"))
 app.use(form.urlencoded({
     extended: true
@@ -67,15 +67,42 @@ app.post("/api/plumbers/slot/:slot/day/:day", function(req, res) {
     })
 
 });
-// app.get("/api/plumbers/:id/bookings", function(req, res) {});
+app.get("/api/plumbers/bookings/:id", function(req, res) {
+  var book = req.params.id;
+   models.pumblerData.findOneAndUpdate({
+           _id: id
+       },
+
+       {
+           $inc: {
+               book: -1
+           }
+       }, {
+           upsert: false
+       },
+       function(err, results) {
+           if (err) {
+               console.log(err);
+           }
+
+           if (results.book <= 1) {
+               results.remove()
+           } else {
+               res.json(results);
+           }
+       })
+
+
+});
 
 
 app.post('/api/plumbers', function(req, res) {
-    var slot = req.body.slot;
-    var day = req.body.day;
     var name = req.body.name;
     var email = req.body.email;
     var cellnumber = req.body.cellnumber;
+    var day = req.body.day;
+    var slot = req.body.slot;
+    var book = book.value;
     console.log(name);
     models.pumblerData.create({
         slot:slot,
@@ -83,6 +110,7 @@ app.post('/api/plumbers', function(req, res) {
         name: name,
         email: email,
         cellnumber: cellnumber,
+        book: book,
 
     }, function(err, results) {
         if (err) {
@@ -97,7 +125,7 @@ app.post('/api/plumbers', function(req, res) {
 
 })
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 6003;
       app.use(function(err, req, res, next) {
         res.status(500).send(err.stack);
       })
