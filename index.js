@@ -39,55 +39,56 @@ app.use(form.urlencoded({
 app.set("view engine", "handlebars")
 
 app.get("/api/plumbers", function(req, res) {
-  models.pumblerData.find({}, function(err, results) {
-       if (err) {
-           console.log(err);
-       } else {
-           console.log(results);
-           res.json({
-               data: results
-           })
+    models.pumblerData.find({}, function(err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(results);
+            res.json({
+                data: results
+            })
 
-       }
-   })
+        }
+    })
 });
 
 app.post("/api/plumbers/slot/:slot/day/:day", function(req, res) {
-  var slot = req.params.slot;
-   var day = req.params.day;
-   models.apiData.find({
-       slot: slot,
-       day: day
-   }, function(err, results) {
-       if (err) {
-           console.log(err);
-       } else {
-           res.json(results)
-       }
-     })
-
-    // res.render("admin")
-});
-app.get("/api/plumbers/:id/bookings", function(req, res) {
-    res.render("admin")
-});
-
-
-app.post('/api/plumbers', function(req, res) {
-    var name = req.body.name;
-    var email = req.body.email;
-    var cellnumber = req.body.cellnumber;
-    console.log(name);
-    models.pumblerData.create({
-        name: name,
-        email: email,
-        cellnumber: cellnumber
+    var slot = req.params.slot;
+    var day = req.params.day;
+    models.apiData.find({
+        slot: slot,
+        day: day
     }, function(err, results) {
         if (err) {
             console.log(err);
         } else {
             res.json(results)
-            // console.log(results);
+        }
+    })
+
+});
+// app.get("/api/plumbers/:id/bookings", function(req, res) {});
+
+
+app.post('/api/plumbers', function(req, res) {
+    var slot = req.body.slot;
+    var day = req.body.day;
+    var name = req.body.name;
+    var email = req.body.email;
+    var cellnumber = req.body.cellnumber;
+    console.log(name);
+    models.pumblerData.create({
+        slot:slot,
+        day:day,
+        name: name,
+        email: email,
+        cellnumber: cellnumber,
+
+    }, function(err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(results)
         }
 
 
@@ -95,13 +96,12 @@ app.post('/api/plumbers', function(req, res) {
     })
 
 })
-app.set('port', (process.env.PORT || 5000));
 
-app.use(function(err, req, res, next) {
-    res.status(500).send(err.stack)
-});
+const port = process.env.PORT || 8000;
+      app.use(function(err, req, res, next) {
+        res.status(500).send(err.stack);
+      })
 
-app.listen(app.get('port'), function() {
-    console.log('Node app is running on port' + app.get('port'));
-
-});
+      app.listen(port, function() {
+        console.log('Example app listening at :' + port)
+      });
