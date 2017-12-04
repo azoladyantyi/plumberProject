@@ -49,10 +49,21 @@ function addPlumber(){
         data: regPlumbler,
         dataType: 'json',
         success: function(plumbers) {
+          regPlumbler()
         }
 
     })
-    regPlumbler()
 }
 
 //function for update
+$('#displayTableDays').on('click', function(e) {
+      var book = e.target.value;
+      $.ajax({
+          type: "POST",
+          url: "/api/plumbers/bookings/" + book,
+          dataType: 'json',
+          success: function(plumbers) {}
+
+      })
+
+  })
